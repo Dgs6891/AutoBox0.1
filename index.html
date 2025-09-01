@@ -1,0 +1,849 @@
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Auto Box - Links de Mecânica Automotiva</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+/* ===== VARIÁVEIS E RESET ===== */
+:root {
+  --verde-limao: #32CD32;
+  --verde-escuro: #228B22;
+  --cinza-claro: #f4f4f4;
+  --cinza-escuro: #333;
+  --sombra: 0 4px 8px rgba(0, 0, 0, 0.1);
+  --facebook: #3b5998;
+  --instagram: #E1306C;
+  --telegram: #0088cc;
+  --whatsapp: #25D366;
+  --youtube: #FF0000;
+  --vermelho: #ff3333;
+}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+  background-color: #f9f9f9;
+  color: #333;
+  line-height: 1.6;
+  padding-top: 20px;
+}
+
+/* ===== CONTAINER PRINCIPAL ===== */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+/* ===== CABEÇALHO E PERFIL ===== */
+.profile-section {
+  text-align: center;
+  margin-bottom: 2rem;
+  padding: 0 1rem;
+}
+
+.app-title {
+  color: var(--verde-limao);
+  font-size: 2.5rem;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.avatar-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+}
+
+.avatar {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 4px solid var(--verde-limao);
+  box-shadow: var(--sombra);
+}
+
+.profile-section h2 {
+  color: var(--verde-escuro);
+  margin-bottom: 0.5rem;
+  font-size: 1.8rem;
+}
+
+.profile-section p {
+  color: #666;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* ===== MENU HAMBÚRGUER ===== */
+.menu-toggle {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 30px;
+  height: 21px;
+  cursor: pointer;
+  z-index: 1000;
+  transition: transform 0.3s;
+}
+.menu-toggle span {
+  height: 3px;
+  width: 100%;
+  background-color: var(--verde-limao);
+  border-radius: 3px;
+  transition: all 0.3s;
+}
+.menu-toggle.active span:nth-child(1) {
+  transform: rotate(45deg) translate(5px, 5px);
+  background-color: var(--vermelho);
+}
+.menu-toggle.active span:nth-child(2) { opacity: 0; }
+.menu-toggle.active span:nth-child(3) {
+  transform: rotate(-45deg) translate(7px, -6px);
+  background-color: var(--vermelho);
+}
+.nav-links {
+  position: fixed;
+  top: 0;
+  left: -100%;
+  width: 80%;
+  max-width: 300px;
+  height: 100vh;
+  background-color: white;
+  box-shadow: 5px 0 15px rgba(0, 0, 0, 0.1);
+  padding: 4rem 1.5rem 2rem;
+  transition: left 0.3s;
+  z-index: 999;
+  list-style: none;
+  overflow-y: auto;
+}
+.nav-links.active { left: 0; }
+.nav-links li { margin-bottom: 1.5rem; }
+.nav-links a {
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 1.1rem;
+  padding: 0.5rem;
+  border-radius: 5px;
+}
+.nav-links a:hover { background-color: #f0f0f0; }
+.nav-links .fa-facebook { color: var(--facebook); }
+.nav-links .fa-instagram { color: var(--instagram); }
+.nav-links .fa-telegram { color: var(--telegram); }
+.nav-links .fa-whatsapp { color: var(--whatsapp); }
+.nav-links .fa-youtube { color: var(--youtube); }
+.nav-links .facebook { color: var(--facebook); }
+.nav-links .instagram { color: var(--instagram); }
+.nav-links .telegram { color: var(--telegram); }
+.nav-links .whatsapp { color: var(--whatsapp); }
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s;
+  z-index: 998;
+}
+.overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* ===== SEARCH BAR ===== */
+.search {
+  width:min(600px, 90vw);
+  margin: 0 auto 2rem auto;
+}
+.search-bar{
+  display:flex;
+  align-items:center;
+  background:#fff;
+  border-radius:50px;
+  padding:6px 10px;
+  box-shadow:0 3px 12px rgba(0,0,0,.15);
+}
+.search-bar input{
+  flex:1;
+  border:0;
+  outline:0;
+  font-size:16px;
+  padding:8px 12px;
+  border-radius:50px;
+  background:transparent;
+}
+.search-bar input::placeholder{ color:#aaa; }
+.search-bar button{
+  border:0;
+  cursor:pointer;
+  display:grid;
+  place-items:center;
+  width:40px;
+  height:40px;
+  border-radius:50%;
+  background:#4a67e8;
+  transition: background .2s ease;
+}
+.search-bar button:hover{ background:#3e58c9; }
+.search-bar svg{
+  width:18px;
+  height:18px;
+  stroke:#fff;
+  stroke-width:2.5;
+  fill:none;
+}
+
+/* ===== GRADE DE CARDS ===== */
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+.card {
+  background: white;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: var(--sombra);
+  transition: transform 0.3s;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+.card:hover { transform: translateY(-5px); }
+.card-id {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: rgba(0, 0, 0, 0.7);
+  color: white;
+  padding: 3px 8px;
+  border-radius: 10px;
+  font-size: 0.7rem;
+}
+.card-img-container {
+  width: 100%;
+  aspect-ratio: 1/1;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background-color: #e8f5e9;
+}
+.card-img { font-size: 4rem; color: var(--verde-escuro); }
+.card-content {
+  padding: 1.2rem;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+.card-content h3 {
+  color: var(--verde-escuro);
+  margin-bottom: 0.5rem;
+  font-size: 1.2rem;
+}
+.card-content p {
+  color: #666;
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+  flex-grow: 1;
+}
+.card-link {
+  display: inline-block;
+  background-color: var(--verde-limao);
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  text-decoration: none;
+  font-weight: 500;
+  transition: background-color 0.3s;
+  text-align: center;
+}
+.card-link:hover { background-color: var(--verde-escuro); }
+
+/* ===== CONTADOR DE CARDS ===== */
+.cards-counter {
+  text-align: center;
+  margin: 1rem 0;
+  font-size: 1.1rem;
+  color: var(--verde-escuro);
+  font-weight: 500;
+}
+
+/* ===== MENSAGEM DE NENHUM ARQUIVO ===== */
+.no-files {
+  text-align: center;
+  padding: 2rem;
+  color: #666;
+  font-size: 1.2rem;
+  grid-column: 1 / -1;
+}
+
+/* ===== POPUP ===== */
+.popup {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
+  z-index: 1001;
+  width: 90%;
+  max-width: 500px;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+.popup h3 {
+  margin-bottom: 1.5rem;
+  color: var(--verde-escuro);
+  text-align: center;
+}
+.popup .form-group {
+  margin-bottom: 1rem;
+}
+.popup label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  color: #444;
+}
+.popup input, .popup textarea {
+  width: 100%;
+  padding: 0.8rem;
+  border: 2px solid #ddd;
+  border-radius: 5px;
+  font-size: 1rem;
+  transition: border-color 0.3s;
+}
+.popup input:focus, .popup textarea:focus {
+  border-color: var(--verde-limao);
+  outline: none;
+}
+.popup textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+.popup-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1.5rem;
+}
+.popup button {
+  padding: 0.8rem 1.5rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.3s;
+}
+.popup .cancel-btn {
+  background-color: #ddd;
+  color: #333;
+}
+.popup .cancel-btn:hover {
+  background-color: #ccc;
+}
+.popup .submit-btn {
+  background-color: var(--verde-limao);
+  color: white;
+}
+.popup .submit-btn:hover {
+  background-color: var(--verde-escuro);
+}
+
+.input-example {
+  font-size: 0.8rem;
+  color: #666;
+  margin-top: 0.3rem;
+  font-style: italic;
+}
+
+/* ===== SEÇÃO DE DUPLICADOS ===== */
+.duplicates-section {
+  margin-top: 2rem;
+  padding-top: 1rem;
+  border-top: 1px solid #eee;
+}
+.duplicates-section h4 {
+  color: var(--vermelho);
+  margin-bottom: 1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.duplicates-section h4 .fa-triangle-exclamation {
+  color: var(--vermelho);
+}
+.duplicate-item {
+  background-color: #fff4f4;
+  padding: 0.8rem;
+  border-radius: 5px;
+  margin-bottom: 0.8rem;
+  font-size: 0.9rem;
+}
+.duplicate-item p {
+  margin-bottom: 0.3rem;
+  word-break: break-all;
+}
+.duplicate-ids {
+  font-weight: bold;
+  color: var(--vermelho);
+}
+
+/* ===== POPUP DE DUPLICADOS ===== */
+.duplicates-popup-content {
+  max-height: 60vh;
+  overflow-y: auto;
+}
+.duplicate-popup-item {
+  background-color: #fff9f9;
+  padding: 1rem;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  border-left: 4px solid var(--vermelho);
+}
+.duplicate-popup-item h4 {
+  color: var(--vermelho);
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.duplicate-popup-item .link {
+  color: #0066cc;
+  word-break: break-all;
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+}
+.duplicate-popup-item .ids {
+  font-weight: bold;
+  color: var(--vermelho);
+  background-color: #ffebee;
+  padding: 0.5rem;
+  border-radius: 4px;
+  display: inline-block;
+}
+
+/* ===== RODAPÉ ===== */
+footer {
+  background-color: var(--cinza-escuro);
+  color: white;
+  text-align: center;
+  padding: 2rem 1rem;
+  margin-top: 3rem;
+}
+.footer-content {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.social-links {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  margin: 1rem 0;
+}
+.social-links a {
+  color: white;
+  font-size: 1.5rem;
+  transition: transform 0.3s;
+}
+.social-links a:hover { transform: translateY(-3px); }
+.social-links .fa-facebook:hover { color: var(--facebook); }
+.social-links .fa-instagram:hover { color: var(--instagram); }
+.social-links .fa-telegram:hover { color: var(--telegram); }
+.social-links .fa-whatsapp:hover { color: var(--whatsapp); }
+.social-links .fa-youtube:hover { color: var(--youtube); }
+
+/* ===== RESPONSIVIDADE ===== */
+@media (max-width: 768px) {
+  .app-title { font-size: 2rem; }
+  .avatar { width: 120px; height: 120px; }
+  .cards-grid { grid-template-columns: 1fr; }
+  .popup {
+    width: 95%;
+    padding: 1.5rem;
+  }
+}
+</style>
+</head>
+<body>
+<!-- Overlay -->
+<div class="overlay" id="overlay"></div>
+<!-- Menu Hambúrguer -->
+<div class="menu-toggle" id="menuToggle">
+  <span></span><span></span><span></span>
+</div>
+<!-- Menu de Navegação -->
+<ul class="nav-links" id="navLinks">
+  <li><a href="#"><i class="fab fa-facebook"></i> <span class="facebook">Facebook</span></a></li>
+  <li><a href="#"><i class="fab fa-instagram"></i> <span class="instagram">Instagram</span></a></li>
+  <li><a href="#"><i class="fab fa-youtube"></i> <span class="youtube">YouTube</span></a></li>
+  <li><a href="https://t.me/+xxxxxxxxxxxxx" target="_blank"><i class="fab fa-telegram"></i> <span class="telegram">Grupo Telegram</span></a></li>
+  <li><a href="https://chat.whatsapp.com/FZTOfx7rhLz9f19QctZqxO?mode=ems_copy_t" target="_blank"><i class="fab fa-whatsapp"></i> <span class="whatsapp">Grupo WhatsApp</span></a></li>
+  <li><a href="#" id="addContentBtn"><i class="fas fa-plus-circle"></i> <span>Adicionar Conteúdo</span></a></li>
+  <div id="duplicatesContainer" class="duplicates-section"></div>
+</ul>
+
+<div class="container">
+  <!-- Cabeçalho -->
+  <section class="profile-section">
+    <h1 class="app-title">Auto Box</h1>
+    <div class="avatar-container">
+      <img src="https://cdn.discordapp.com/attachments/1375289031704842384/1411869766972604438/IMG-20250831-WA0018.jpg?ex=68b639af&is=68b4e82f&hm=fa6cc8d7b5e62945fb3f32314f738d277dd3fb00a6c5aa2fa4a14c1af8cbce04&
+" alt="Avatar" class="avatar">
+    </div>
+    <h2>Compartilhamento de Conteúdos</h2>
+    <p>Links úteis sobre mecânica automotiva para você aproveitar</p>
+  </section>
+
+  <!-- Barra de Pesquisa -->
+  <form class="search" action="#" role="search" onsubmit="return false;">
+    <div class="search-bar">
+      <input type="text" id="searchInput" placeholder="Pesquisar..." aria-label="Pesquisar">
+      <button type="submit" aria-label="Buscar">
+        <svg viewBox="0 0 24 24">
+          <circle cx="11" cy="11" r="7"></circle>
+          <line x1="16.5" y1="16.5" x2="21" y2="21"></line>
+        </svg>
+      </button>
+    </div>
+  </form>
+
+  <!-- Contador de Cards -->
+  <div class="cards-counter" id="cardsCounter"></div>
+
+  <!-- Grade de Cards -->
+  <section class="cards-grid" id="cardsContainer"></section>
+</div>
+
+<!-- Popup para Adicionar Conteúdo -->
+<div class="popup" id="addContentPopup">
+  <h3>Adicionar Novo Conteúdo</h3>
+  <div class="form-group">
+    <label for="driveLink">Link do Google Drive:</label>
+    <input type="url" id="driveLink" placeholder="https://drive.google.com/..." required>
+    <div class="input-example">Ex: https://drive.google.com/drive/folders/1vbFlaH7G7Ik0zaLozl0Svkl0Ad3X3O_4</div>
+  </div>
+  <div class="form-group">
+    <label for="contentTitle">Título:</label>
+    <input type="text" id="contentTitle" placeholder="Título do conteúdo" required>
+    <div class="input-example">Ex: Manual VW Gol 1.0 2015 - Central ME7.5.10</div>
+  </div>
+  <div class="form-group">
+    <label for="contentDescription">Descrição:</label>
+    <textarea id="contentDescription" placeholder="Descrição do conteúdo" required></textarea>
+    <div class="input-example">Ex: Manual completo de reparação com diagramas elétricos, procedimentos de reprogramação e códigos de falha para central ME7.5.10</div>
+  </div>
+  <div class="popup-buttons">
+    <button class="cancel-btn" id="cancelPopup">Cancelar</button>
+    <button class="submit-btn" id="submitContent">Enviar</button>
+  </div>
+</div>
+
+<!-- Popup para Duplicados -->
+<div class="popup" id="duplicatesPopup">
+  <h3>Conteúdos Duplicados</h3>
+  <div class="duplicates-popup-content" id="duplicatesPopupContent"></div>
+  <div class="popup-buttons">
+    <button class="cancel-btn" id="closeDuplicatesPopup">Fechar</button>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-content">
+    <p>Auto Box &copy; 2023 - Todos os direitos reservados</p>
+    <div class="social-links">
+      <a href="#"><i class="fab fa-facebook"></i></a>
+      <a href="#"><i class="fab fa-instagram"></i></a>
+      <a href="#"><i class="fab fa-youtube"></i></a>
+      <a href="https://t.me/+xxxxxxxxxxxxx" target="_blank"><i class="fab fa-telegram"></i></a>
+      <a href="https://chat.whatsapp.com/xxxxxxxxxxxxx" target="_blank"><i class="fab fa-whatsapp"></i></a>
+    </div>
+  </div>
+</footer>
+
+<script>
+// Constante com IDs formatados como #1, #2, #3, etc.
+const cardsData = [
+  { id: "#1", title: "Car Care Kiosk", description: "Site com informações sobre cuidados automotivos", link: "https://www.carcarekiosk.com/", image: "🔧" },
+  { id: "#2", title: "Opinautos", description: "Plataforma brasileira para escolha de marcas automotivas", link: "https://www.opinautos.com.br/br/escolhermarca", image: "🚗" },
+  { id: "#3", title: "App Schematic", description: "Aplicativo Android para mecânica automotiva", link: "https://play.google.com/store/apps/details?id=com.appschematic", image: "📱" },
+  { id: "#4", title: "Car Manual Min", description: "Aplicativo com manuais de carro para Android", link: "https://play.google.com/store/apps/details?id=com.min.car", image: "📱" },
+  { id: "#5", title: "Documentos Técnicos 1", description: "Pasta do Drive com documentos técnicos diversos", link: "https://drive.google.com/drive/mobile/folders/1vbFlaH7G7Ik0zaLozl0Svkl0Ad3X3O_4?usp=drive_open", image: "📁" },
+  { id: "#6", title: "Documentos Técnicos 2", description: "Segunda pasta do Drive com material técnico", link: "https://drive.google.com/drive/folders/1cIYADxe2Mxtp7LaM4Te7SKx2zJZfYw8O", image: "📁" },
+  { id: "#7", title: "Documentos Técnicos 3", description: "Terceira pasta com conteúdos de mecânica", link: "https://drive.google.com/drive/folders/1N5NuB1IPhdWZURw1u9dsA32Wr93HkjEf", image: "📁" },
+  { id: "#8", title: "Documentos Técnicos 4", description: "Quarta pasta com materiais de estudo", link: "https://drive.google.com/drive/folders/1c8pmg9_XHwlV5EJea3lfXHPhML4Qn7B6", image: "📁" },
+  { id: "#9", title: "Documentos Técnicos 5", description: "Quinta pasta com manuais e guias", link: "https://drive.google.com/drive/folders/1cBFoy5CoXdy0ksEhlklQklQsM-xBPdA8", image: "📁" },
+  { id: "#10", title: "Documentos Técnicos 6", description: "Sexta pasta com documentos variados", link: "https://drive.google.com/drive/folders/1blTk1pqAnQ1leh-7r3OZLAYnwRfNXQJW", image: "📁" },
+  { id: "#11", title: "Manual do Bruto", description: "Pasta completa com documentos técnicos do Manual do Bruto", link: "https://drive.google.com/drive/folders/1yeQrGlo_TYfQ7KwZNOMWID6WOwiKXUzb?usp=sharing", image: "📂" },
+  { id: "#12", title: "Conteúdo Exclusivo", description: "Pasta com materiais exclusivos para mecânicos", link: "https://drive.google.com/drive/folders/1-duggUB8QnPDCJk05sQwJBiJCi5GqTGi?usp=sharing", image: "🔧" },
+  // Link duplicado para teste - mesmo link do item #12
+  { id: "#13", title: "Conteúdo Exclusivo Duplicado", description: "Esta é uma cópia para testar a detecção de duplicados", link: "https://drive.google.com/drive/folders/1-duggUB8QnPDCJk05sQwJBiJCi5GqTGi?usp=sharing", image: "🔧" }
+];
+
+// Verificar e remover duplicados
+function removeDuplicates(cards) {
+  const uniqueLinks = new Set();
+  const result = [];
+  const duplicates = [];
+  
+  for (const card of cards) {
+    if (!uniqueLinks.has(card.link)) {
+      uniqueLinks.add(card.link);
+      result.push(card);
+    } else {
+      duplicates.push(card);
+    }
+  }
+  
+  return { uniqueCards: result, duplicates };
+}
+
+// Encontrar todos os duplicados
+function findAllDuplicates(cards) {
+  const linkMap = {};
+  
+  for (const card of cards) {
+    if (!linkMap[card.link]) {
+      linkMap[card.link] = [];
+    }
+    linkMap[card.link].push(card);
+  }
+  
+  const duplicates = {};
+  for (const link in linkMap) {
+    if (linkMap[link].length > 1) {
+      duplicates[link] = linkMap[link];
+    }
+  }
+  
+  return duplicates;
+}
+
+// Renderizar cards
+function renderCards(data) {
+  const container = document.getElementById('cardsContainer');
+  const counter = document.getElementById('cardsCounter');
+  const { uniqueCards, duplicates } = removeDuplicates(data);
+  
+  container.innerHTML = "";
+  
+  if (uniqueCards.length === 0) {
+    container.innerHTML = '<div class="no-files">Nenhum arquivo encontrado</div>';
+    counter.textContent = "0 cards encontrados";
+    return;
+  }
+  
+  uniqueCards.forEach(card => {
+    const cardEl = document.createElement('div');
+    cardEl.className = 'card';
+    cardEl.innerHTML = `
+      <div class="card-id">${card.id}</div>
+      <div class="card-img-container"><div class="card-img">${card.image}</div></div>
+      <div class="card-content">
+        <h3>${card.title}</h3>
+        <p>${card.description}</p>
+        <a href="${card.link}" target="_blank" class="card-link">Acessar</a>
+      </div>`;
+    container.appendChild(cardEl);
+  });
+  
+  counter.textContent = `${uniqueCards.length} card(s) encontrado(s)`;
+  
+  // Atualizar lista de duplicados no menu
+  updateDuplicatesList(duplicates);
+}
+
+// Atualizar lista de duplicados no menu
+function updateDuplicatesList(duplicates) {
+  const duplicatesContainer = document.getElementById('duplicatesContainer');
+  const allDuplicates = findAllDuplicates(cardsData);
+  
+  duplicatesContainer.innerHTML = "";
+  
+  if (Object.keys(allDuplicates).length === 0) {
+    return;
+  }
+  
+  const title = document.createElement('h4');
+  title.innerHTML = '<i class="fas fa-triangle-exclamation"></i> Conteúdos Duplicados';
+  title.addEventListener('click', () => {
+    showDuplicatesPopup(allDuplicates);
+  });
+  title.style.cursor = 'pointer';
+  
+  duplicatesContainer.appendChild(title);
+  
+  const countText = document.createElement('p');
+  countText.textContent = `${Object.keys(allDuplicates).length} link(s) duplicado(s) - Clique para detalhes`;
+  countText.style.fontSize = '0.9rem';
+  countText.style.color = '#666';
+  countText.style.marginTop = '0.5rem';
+  countText.addEventListener('click', () => {
+    showDuplicatesPopup(allDuplicates);
+  });
+  countText.style.cursor = 'pointer';
+  
+  duplicatesContainer.appendChild(countText);
+}
+
+// Mostrar popup de duplicados
+function showDuplicatesPopup(duplicates) {
+  const popupContent = document.getElementById('duplicatesPopupContent');
+  popupContent.innerHTML = '';
+  
+  for (const link in duplicates) {
+    const duplicateItem = document.createElement('div');
+    duplicateItem.className = 'duplicate-popup-item';
+    
+    const title = document.createElement('h4');
+    title.innerHTML = '<i class="fas fa-link"></i> Link Duplicado';
+    
+    const idsText = document.createElement('p');
+    idsText.innerHTML = `<span class="ids">IDs: ${duplicates[link].map(card => card.id).join(', ')}</span>`;
+    
+    const linkText = document.createElement('p');
+    linkText.innerHTML = `<span class="link">${link}</span>`;
+    
+    duplicateItem.appendChild(title);
+    duplicateItem.appendChild(idsText);
+    duplicateItem.appendChild(linkText);
+    popupContent.appendChild(duplicateItem);
+  }
+  
+  document.getElementById('duplicatesPopup').style.display = 'block';
+  document.getElementById('overlay').classList.add('active');
+}
+
+// Configurar menu hambúrguer
+function setupMenu() {
+  const menuToggle = document.getElementById('menuToggle');
+  const navLinks = document.getElementById('navLinks');
+  const overlay = document.getElementById('overlay');
+  
+  function openMenu(){ 
+    menuToggle.classList.add('active'); 
+    navLinks.classList.add('active'); 
+    overlay.classList.add('active'); 
+  }
+  
+  function closeMenu(){ 
+    menuToggle.classList.remove('active'); 
+    navLinks.classList.remove('active'); 
+    overlay.classList.remove('active'); 
+  }
+  
+  menuToggle.addEventListener('click', (e)=>{
+    e.stopPropagation(); 
+    menuToggle.classList.contains('active') ? closeMenu() : openMenu(); 
+  });
+  
+  overlay.addEventListener('click', closeMenu);
+  document.querySelectorAll('.nav-links a').forEach(link => link.addEventListener('click', function(e) {
+    if (!this.getAttribute('href') || this.getAttribute('href') === '#') {
+      e.preventDefault();
+    }
+    closeMenu();
+  }));
+  
+  document.addEventListener('click', (e) => {
+    if (!navLinks.contains(e.target) && !menuToggle.contains(e.target) && navLinks.classList.contains('active')) {
+      closeMenu();
+    }
+  });
+  
+  // Configurar botão para abrir popup de adicionar conteúdo
+  document.getElementById('addContentBtn').addEventListener('click', (e) => {
+    e.preventDefault();
+    document.getElementById('addContentPopup').style.display = 'block';
+    overlay.classList.add('active');
+  });
+  
+  // Configurar botão de cancelar no popup de adicionar conteúdo
+  document.getElementById('cancelPopup').addEventListener('click', () => {
+    document.getElementById('addContentPopup').style.display = 'none';
+    overlay.classList.remove('active');
+  });
+  
+  // Configurar botão de fechar no popup de duplicados
+  document.getElementById('closeDuplicatesPopup').addEventListener('click', () => {
+    document.getElementById('duplicatesPopup').style.display = 'none';
+    overlay.classList.remove('active');
+  });
+  
+  // Configurar envio do formulário
+  document.getElementById('submitContent').addEventListener('click', () => {
+    const driveLink = document.getElementById('driveLink').value;
+    const contentTitle = document.getElementById('contentTitle').value;
+    const contentDescription = document.getElementById('contentDescription').value;
+    
+    if (!driveLink || !contentTitle || !contentDescription) {
+      alert('Por favor, preencha todos os campos.');
+      return;
+    }
+    
+    // Montar mensagem para WhatsApp
+    const message = `Novo conteúdo para adicionar:%0A%0A` +
+                   `{ id: "##", title: "${contentTitle}", description: "${contentDescription}", link: "${driveLink}", image: "📁" },%0A%0A` +
+                   `WhatsApp: 5583986737667`;
+    
+    // Abrir WhatsApp com a mensagem
+    window.open(`https://wa.me/5583986737667?text=${message}`, '_blank');
+    
+    // Fechar popup
+    document.getElementById('addContentPopup').style.display = 'none';
+    overlay.classList.remove('active');
+    
+    // Limpar formulário
+    document.getElementById('driveLink').value = '';
+    document.getElementById('contentTitle').value = '';
+    document.getElementById('contentDescription').value = '';
+  });
+}
+
+// Inicializar a aplicação
+document.addEventListener('DOMContentLoaded', () => {
+  renderCards(cardsData);
+  setupMenu();
+
+  const searchInput = document.getElementById('searchInput');
+  searchInput.addEventListener('input', () => {
+    const query = searchInput.value.toLowerCase();
+    const filtered = cardsData.filter(c =>
+      c.title.toLowerCase().includes(query) ||
+      c.description.toLowerCase().includes(query) ||
+      c.link.toLowerCase().includes(query)
+    );
+    renderCards(filtered);
+  });
+});
+</script>
+</body>
+</html>
